@@ -21,7 +21,7 @@
    * Delega en los **business_services** procesos genéricos avanzados de la capa de negocio.
 * `busines_services` Clases de servicios de apoyo, como fachada de construcción de PDF, fachada de tratamiento de JWT, encriptación...
 * `data_services` Clases de servicios avanzados de BD.
-* `repositories` Clases de acceso a BD mediante el patrón DAO.
+* `daos` Clases de acceso a BD mediante el patrón DAO.
    * Operaciones CRUD sobre BD.
    * Consultas a BD.
-* `documents` Clases con los documentos persistentes en BD y utilidades.
+* `orms` Clases con los documentos persistentes en BD y utilidades.
