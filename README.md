@@ -14,9 +14,9 @@
    * Delega en los **bussines_controllers** la ejecución de la petición.
 * `bussines_controllers` Clases que procesan la petición.
    * Desarrollan el proceso que conlleva la ejecución de la petición.
-   * Construye los **documents** a partir de los **dtos** de entrada.
+   * Construye los **orms** a partir de los **dtos** de entrada.
    * Delega en los **dtos** la construcción de los **dtos** de respuesta a partir de los **documents**.
-   * Delega en los **repositories** el acceso básico a las BD.
+   * Delega en los **daos** el acceso básico a las BD.
    * Delega en los **data_services** procesos de acceso avanzado a las BD.
    * Delega en los **business_services** procesos genéricos avanzados de la capa de negocio.
 * `busines_services` Clases de servicios de apoyo, como fachada de construcción de PDF, fachada de tratamiento de JWT, encriptación...
