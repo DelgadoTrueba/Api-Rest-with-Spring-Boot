@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.delgadotrueba.api.dao.EmployeeRepository;
-import com.delgadotrueba.api.entities.Employee;
+import com.delgadotrueba.api.orm.Employee;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{

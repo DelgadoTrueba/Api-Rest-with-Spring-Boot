@@ -2,7 +2,7 @@ package com.delgadotrueba.api.servicies;
 
 import java.util.List;
 
-import com.delgadotrueba.api.entities.Employee;
+import com.delgadotrueba.api.orm.Employee;
 
 public interface EmployeeService {
 	

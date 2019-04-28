@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delgadotrueba.api.entities.Employee;
+import com.delgadotrueba.api.orm.Employee;
 import com.delgadotrueba.api.servicies.EmployeeService;
 
 @RestController
 @RequestMapping("employees")
-public class EmployeeRestController {
+public class EmployeeResource {
 
 	@Autowired
 	private EmployeeService employeeService;
 	
-	public EmployeeRestController(EmployeeService theEmployeeService) {
+	public EmployeeResource(EmployeeService theEmployeeService) {
 		employeeService = theEmployeeService;
 	}
 	

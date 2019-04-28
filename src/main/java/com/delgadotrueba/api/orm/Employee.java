@@ -1,4 +1,4 @@
-package com.delgadotrueba.api.entities;
+package com.delgadotrueba.api.orm;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
