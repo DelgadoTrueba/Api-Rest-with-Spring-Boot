@@ -1,7 +1,7 @@
 # Api-Rest-with-Spring-Boot
 
 ## Arquitectura
-![](https://https://github.com/DelgadoTrueba/Api-Rest-with-Spring-Boot/blob/master/docs/vistaDeDesarrollo.png)
+![](https://github.com/DelgadoTrueba/Api-Rest-with-Spring-Boot/blob/master/docs/vistaDeDesarrollo.png)
 
 ### Responsabilidades
 * `config` Clases de configuración de **Spring**.
