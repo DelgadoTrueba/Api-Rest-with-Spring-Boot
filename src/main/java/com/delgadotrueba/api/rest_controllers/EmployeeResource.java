@@ -22,10 +22,6 @@ public class EmployeeResource {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	public EmployeeResource(EmployeeService theEmployeeService) {
-		employeeService = theEmployeeService;
-	}
-	
 	// expose "/employees" and return list of employees
 	@GetMapping()
 	public List<Employee> findAll() {
