@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 public class DatabaseSeederService {
 
 	@Autowired
-	EmployeeRepository employeeRepository;
+	private EmployeeRepository employeeRepository;
 	
 	@Value("${databaseSeeder.ymlFileName:#{null}}")
     private String ymlFileName;
