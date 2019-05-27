@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.util.ObjectUtils;
+
 @Entity
 @Table(name="employee")
 public class Employee {
@@ -80,5 +82,32 @@ public class Employee {
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		/*
+		return this == obj || obj != null && getClass() == obj.getClass() 
+				&& this.firstName.equals(((Employee) obj).firstName)
+				&& this.lastName.equals(((Employee) obj).lastName)
+				&& this.email.equals(((Employee) obj).email);
+		 */
 		
+		if (this == obj) {
+	      return true;
+	    }
+	    else if (obj == null || getClass() != obj.getClass()) {
+	      return false;
+	    }
+	  
+	    final Employee employee = (Employee) obj;
+	  
+	    return (
+	    		this.firstName.equals(employee.firstName) &&
+	    		this.lastName.equals(employee.lastName) &&
+	    		this.email.equals(employee.email)	    		
+	    		);
+
+	}
+	
+	
 }
