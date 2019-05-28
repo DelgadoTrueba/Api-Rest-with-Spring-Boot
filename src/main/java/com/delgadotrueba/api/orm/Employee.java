@@ -82,8 +82,7 @@ public class Employee {
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
-
-	@Override
+	
 	public boolean equals(Object obj) {
 		/*
 		return this == obj || obj != null && getClass() == obj.getClass() 

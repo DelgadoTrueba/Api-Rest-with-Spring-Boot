@@ -1,7 +1,10 @@
 package com.delgadotrueba.api.repositories;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +29,21 @@ class EmployeeRepositoryIT {
     }
 
 	@Test
-	void testFindByMobile() {
-		Employee employeeBd = employeeRepository.findByEmail("dc@gmail.com").get();
-		assertEquals(this.employee1, employeeBd);
+	void testFindById() {
+		Optional<Employee> employee = employeeRepository.findById(this.employee1.getId());
+		assertTrue(employee.isPresent());
+		assertEquals(this.employee1, employee.get());
 	}
+	
+	@Test
+	void testFindByIdNotFound() {
+		Optional<Employee> employee = employeeRepository.findById(9898989);
+		assertFalse(employee.isPresent());
+	}
+	
+	@Test
+    void testReadAll() {
+        assertTrue(this.employeeRepository.findAll().size() > 1);
+    }
 	  
 }
