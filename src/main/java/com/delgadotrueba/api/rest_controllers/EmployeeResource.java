@@ -54,7 +54,7 @@ public class EmployeeResource {
 		
 		theEmployee.setId(0);
 		
-		employeeService.save(theEmployee);
+		theEmployee = employeeService.save(theEmployee);
 		
 		return theEmployee;
 	}
@@ -62,9 +62,9 @@ public class EmployeeResource {
 	// add mapping for PUT /employees - update existing employee
 	
 	@PutMapping()
-	public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO theEmployee) {
+	public EmployeeDTO updateEmployee(@Valid @RequestBody EmployeeDTO theEmployee) {
 		
-		employeeService.save(theEmployee);
+		theEmployee = employeeService.update(theEmployee);
 		
 		return theEmployee;
 	}

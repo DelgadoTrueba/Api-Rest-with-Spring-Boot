@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public void save(EmployeeDTO theEmployeeDTO) {
+	public EmployeeDTO save(EmployeeDTO theEmployeeDTO) {
 		
 		Employee theEmployee = new Employee(
 											theEmployeeDTO.getFirstName(),
@@ -60,8 +60,24 @@ public class EmployeeServiceImpl implements EmployeeService{
 											);
 		
 		employeeRepository.save(theEmployee);
+		
+		return new EmployeeDTO(theEmployee);
 	}
 
+	public EmployeeDTO update(EmployeeDTO theEmployeeDTO) {
+		
+		//puede lanzar una excepción
+		Employee theEmployee = this.employeeRepository.findById(theEmployeeDTO.getId()).get();
+		
+		theEmployee.setFirstName(theEmployeeDTO.getFirstName());
+		theEmployee.setLastName(theEmployeeDTO.getLastName());
+		theEmployee.setEmail(theEmployeeDTO.getEmail());
+		
+		this.employeeRepository.save(theEmployee);
+		
+		return new EmployeeDTO(theEmployee);
+	}
+	
 	@Override
 	public void deleteById(int theId) {
 		employeeRepository.deleteById(theId);

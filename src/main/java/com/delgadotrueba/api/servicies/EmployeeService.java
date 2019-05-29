@@ -11,7 +11,9 @@ public interface EmployeeService {
 	
 	public EmployeeDTO findById(int theId);
 	
-	public void save(EmployeeDTO theEmployeeDTO);
+	public EmployeeDTO save(EmployeeDTO theEmployeeDTO);
+	
+	public EmployeeDTO update(EmployeeDTO theEmployeeDTO);
 	
 	public void deleteById(int theId);
 }
