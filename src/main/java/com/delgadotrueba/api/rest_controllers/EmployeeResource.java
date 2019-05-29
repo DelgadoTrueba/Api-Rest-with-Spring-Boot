@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,7 @@ public class EmployeeResource {
 	}
 	
 	// add mapping for POST /employees - add new employee
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping()
 	public EmployeeDTO addEmployee(@Valid @RequestBody EmployeeDTO theEmployee) {
 		
