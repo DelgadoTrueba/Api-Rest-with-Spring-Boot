@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.base.Predicate;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,6 +19,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import static java.util.Collections.*;
 
 @Configuration
 @EnableSwagger2
@@ -37,7 +40,9 @@ public class SwaggerConfig {
         		.build()
         		.apiInfo(this.apiInfo())
         	    .produces(DEFAULT_PRODUCES_AND_CONSUMES)
-        	    .consumes(DEFAULT_PRODUCES_AND_CONSUMES);
+        	    .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
+        	    .securitySchemes( singletonList(this.basicAuth()) )
+        	    .securityContexts( singletonList(this.securityContext()) );
     }
     
     private ApiInfo apiInfo() {
@@ -47,5 +52,39 @@ public class SwaggerConfig {
         			.version(VERSION)
         			.build();
     }
+    
+    private BasicAuth basicAuth() {
+        return new BasicAuth("Basic");
+    }
+    
+     
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+            .securityReferences(this.defaultAuth())
+            .forPaths(PathSelectors.ant("/employees/**")) 
+            .forHttpMethods(this.methodSelector())
+            .build();
+     }
+     
+     private List<SecurityReference> defaultAuth() {
+        
+    	AuthorizationScope authorizationScope
+            = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        
+        return singletonList(
+            new SecurityReference("Basic", authorizationScopes)
+        ); 
+     }
+     
+     private Predicate<org.springframework.http.HttpMethod> methodSelector() {     
+         return new Predicate<org.springframework.http.HttpMethod>() {
+	 		@Override
+	 		public boolean apply(org.springframework.http.HttpMethod input) {
+	 			return input.matches("POST");
+	 		}
+         };
+     }
    
 }

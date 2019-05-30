@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.delgadotrueba.api.dtos.EmployeeDTO;
 import com.delgadotrueba.api.servicies.EmployeeService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+
 @RestController
 @RequestMapping("employees")
 public class EmployeeResource {
