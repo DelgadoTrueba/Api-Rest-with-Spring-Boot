@@ -33,7 +33,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
+        return new Docket(DocumentationType.SWAGGER_2)
         		.select()                                  
         		.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))              
         		.paths(PathSelectors.any())                          
@@ -41,6 +41,7 @@ public class SwaggerConfig {
         		.apiInfo(this.apiInfo())
         	    .produces(DEFAULT_PRODUCES_AND_CONSUMES)
         	    .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
+        	    .useDefaultResponseMessages(false)
         	    .securitySchemes( singletonList(this.basicAuth()) )
         	    .securityContexts( singletonList(this.securityContext()) );
     }
@@ -82,7 +83,7 @@ public class SwaggerConfig {
          return new Predicate<org.springframework.http.HttpMethod>() {
 	 		@Override
 	 		public boolean apply(org.springframework.http.HttpMethod input) {
-	 			return input.matches("POST");
+	 			return input.matches("POST") || input.matches("PUT")  || input.matches("DELETE");
 	 		}
          };
      }

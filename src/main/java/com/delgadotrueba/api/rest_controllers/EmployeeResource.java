@@ -65,7 +65,7 @@ public class EmployeeResource {
 	}
 	
 	// add mapping for PUT /employees - update existing employee
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping()
 	public EmployeeDTO updateEmployee(@Valid @RequestBody EmployeeDTO theEmployee) {
 		
@@ -75,7 +75,7 @@ public class EmployeeResource {
 	}
 	
 	// add mapping for DELETE /employees/{employeeId} - delete employee
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{employeeId}")
 	public String deleteEmployee(@PathVariable int employeeId) {
 		
