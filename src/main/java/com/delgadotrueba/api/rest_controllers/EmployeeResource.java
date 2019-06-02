@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.delgadotrueba.api.business_controllers.EmployeeService;
 import com.delgadotrueba.api.dtos.EmployeeDTO;
-import com.delgadotrueba.api.servicies.EmployeeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

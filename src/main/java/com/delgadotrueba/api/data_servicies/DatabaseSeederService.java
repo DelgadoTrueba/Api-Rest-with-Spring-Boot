@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 
 import com.delgadotrueba.api.dao.EmployeeRepository;
+import com.delgadotrueba.api.dao.UserRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,9 @@ public class DatabaseSeederService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Value("${databaseSeeder.ymlFileName:#{null}}")
     private String ymlFileName;
@@ -52,6 +56,8 @@ public class DatabaseSeederService {
        LogManager.getLogger(this.getClass()).warn("------- Delete All -----------");
        
        // Delete Repositories -----------------------------------------------------
+       this.userRepository.deleteAll();
+
        this.employeeRepository.deleteAll();
 
        // -------------------------------------------------------------------------
@@ -81,6 +87,8 @@ public class DatabaseSeederService {
         Yaml yamlParser = new Yaml(new Constructor(DatabaseGraph.class));
         DatabaseGraph tpvGraph = yamlParser.load(input);
 
+        this.userRepository.saveAll(tpvGraph.getUserList());
+        
         this.employeeRepository.saveAll(tpvGraph.getEmployeeList());
     
 

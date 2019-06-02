@@ -37,8 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().httpBasic()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                //.and().addFilter(jwtAuthorizationFilter());
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilter(jwtAuthorizationFilter());
     }
 	
+	/*JWT*/
+	 @Bean
+	 public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
+		 return new JwtAuthorizationFilter(this.authenticationManager());
+	 }
 }

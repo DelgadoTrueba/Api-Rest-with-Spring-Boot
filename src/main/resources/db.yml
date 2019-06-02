@@ -6,3 +6,12 @@ employeeList:
    lastName: garcia
    email: igarcia@domicnio.com
     
+userList: 
+ - &us0
+    mobile: 639221188
+    username: admin
+    password: admin
+    roles:
+      - ADMIN
+      - MANAGER
+      - OPERATOR
