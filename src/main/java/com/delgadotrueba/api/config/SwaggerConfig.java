@@ -2,6 +2,7 @@ package com.delgadotrueba.api.config;
 
 import static java.util.Collections.singletonList;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -18,9 +19,11 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.BasicAuth;
 import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -51,8 +54,8 @@ public class SwaggerConfig {
         	    .produces(DEFAULT_PRODUCES_AND_CONSUMES)
         	    .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
         	    .useDefaultResponseMessages(false)
-        	    .securitySchemes( singletonList(this.basicAuth()) )
-        	    .securityContexts( singletonList(this.securityContext()) );
+        	    .securitySchemes( this.schemeList() )
+        	    .securityContexts( this.securityContextList() );
     }
     
     private ApiInfo apiInfo() {
@@ -63,16 +66,35 @@ public class SwaggerConfig {
         			.build();
     }
     
-    private BasicAuth basicAuth() {
-        return new BasicAuth("Basic");
+    private List<SecurityScheme> schemeList() {
+        return Arrays.asList(
+        		new BasicAuth("Basic"),
+                new ApiKey("Bearer", "Authorization", "header")
+                );
     }
          
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-            .securityReferences(this.defaultAuth())
-            .forPaths(PathSelectors.ant("/employees/**")) 
-            .forHttpMethods(this.methodSelector())
-            .build();
+    private List<SecurityContext> securityContextList() {
+    	/*
+    	SecurityContext securityContextBasicAuth = 
+    			SecurityContext.builder()
+		            .securityReferences(this.defaultAuth())
+		            .forPaths(PathSelectors.ant("/employees/**")) 
+		            .forHttpMethods(this.methodSelector())
+		            .build();
+		*/
+    	
+    	SecurityContext securityContextJWT = 
+    			SecurityContext.builder()
+		            .securityReferences(this.defaultAuth())
+		            .forPaths(PathSelectors.ant("/employees/**")) 
+		            .forHttpMethods(this.methodSelector())
+		            .build();
+    	
+    	ArrayList<SecurityContext> context = new ArrayList<SecurityContext>();
+    	
+    	context.add(securityContextJWT);
+    	
+    	return context;
      }
      
 	private List<SecurityReference> defaultAuth() {
@@ -83,7 +105,7 @@ public class SwaggerConfig {
 		authorizationScopes[0] = authorizationScope;
 		
 		return singletonList(
-		    new SecurityReference("Basic", authorizationScopes)
+		    new SecurityReference("Bearer", authorizationScopes)
 		    ); 
 	 }
      
