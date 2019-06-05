@@ -28,20 +28,20 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(final String mobile) throws UsernameNotFoundException {
-		// Se accede a UserDAO para buscar el usuario para obtener su clave y roles
+		 
+		 // Se accede a UserDAO para buscar el usuario para obtener su clave y roles
+		 
 		 User user = this.userRepository.findByMobile(mobile)
 	                .orElseThrow(() -> new UsernameNotFoundException("mobile not found. " + mobile));
 		 
+		 String user_name = user.getUsername();
 		 
-	     return this.userBuilder(user.getMobile(), user.getPassword(), new Role[]{Role.AUTHENTICATED});
-		/*
-		if("admin".equals(username)) {
-			return this.userBuilder(username, new BCryptPasswordEncoder().encode("123456"), "ADMIN");
-		} 
-		else {
-			throw new UsernameNotFoundException("Usuario no encontrado");
-		}
-		*/
+		 String password = user.getPassword();
+		 
+		 Role[] roles = getRoles(user);
+		 		 
+	     return this.userBuilder(user_name, password, roles);
+	
 	}
 	
 	private org.springframework.security.core.userdetails.User userBuilder(String username, String password, Role[] roles) {
@@ -57,6 +57,22 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         }
 				
 		return new org.springframework.security.core.userdetails.User(username, password, enabled, credentialsNonExpired, accountNonExpired, accountNonLocked, authorities);
+	}
+	
+	private Role[] getRoles(User user) {
+		
+		List<Role> roles_resul = user.getRoles();
+		int rolesLenght = roles_resul.size();
+		
+		Role[] roles = new Role[rolesLenght+1];
+		
+		for(int i = 0; i < rolesLenght; i++) {
+			roles[i] = roles_resul.get(i);
+		}
+		
+		roles[rolesLenght] = Role.AUTHENTICATED;
+		
+		return roles;
 	}
 
 }

@@ -38,12 +38,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilter(jwtAuthorizationFilter());
+                .and()
+                	.addFilter(jwtTokenAuthenticationFilter())
+                	.addFilter(jwtUsernameAndPasswordAuthenticationFilter());
+
     }
 	
-	/*JWT*/
-	 @Bean
-	 public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
-		 return new JwtAuthorizationFilter(this.authenticationManager());
-	 }
+	
+	@Bean //Muy importante pues nos permite usar el autowired
+    public JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter() throws Exception {
+        return new JwtTokenAuthenticationFilter(this.authenticationManager());
+    }
+	
+
+	@Bean //Muy importante pues nos permite usar el autowired
+    public JwtUsernameAndPasswordAuthenticationFilter jwtUsernameAndPasswordAuthenticationFilter() throws Exception {
+        return new JwtUsernameAndPasswordAuthenticationFilter(this.authenticationManager());
+    }
+ 
+	 
 }

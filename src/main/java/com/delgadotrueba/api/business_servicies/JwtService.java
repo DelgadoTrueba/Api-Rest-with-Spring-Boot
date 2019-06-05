@@ -34,6 +34,18 @@ public class JwtService {
                 .sign(Algorithm.HMAC256(SECRET));
     }
     
+    //Parche
+    public String createToken(String user, String[] roles) {
+        return JWT.create()
+                .withIssuer(ISSUER)
+                .withIssuedAt(new Date())
+                .withNotBefore(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRES_IN_MILLISECOND))
+                .withClaim(USER, user)
+                .withArrayClaim(ROLES, roles)
+                .sign(Algorithm.HMAC256(SECRET));
+    }
+    
     public boolean isBearer(String authorization) {
         return authorization != null && authorization.startsWith(BEARER) && authorization.split("\\.").length == 3;
     }
