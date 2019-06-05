@@ -27,12 +27,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	private UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(final String mobile) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		 
 		 // Se accede a UserDAO para buscar el usuario para obtener su clave y roles
 		 
-		 User user = this.userRepository.findByMobile(mobile)
-	                .orElseThrow(() -> new UsernameNotFoundException("mobile not found. " + mobile));
+		 User user = this.userRepository.findByUsername(username)
+	                .orElseThrow(() -> new UsernameNotFoundException("username not found. " + username));
 		 
 		 String user_name = user.getUsername();
 		 
