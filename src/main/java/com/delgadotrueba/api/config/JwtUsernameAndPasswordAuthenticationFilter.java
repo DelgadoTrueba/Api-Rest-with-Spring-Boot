@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -33,7 +35,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 		
 		// By default, UsernamePasswordAuthenticationFilter listens to "/login" path. 
 		// In our case, we use "/auth". So, we need to override the defaults.
-		//this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/v0/users/token2", "POST"));
+		this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/users/token", "POST"));
 	}
 	
 	@Override
@@ -44,6 +46,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 			
 			// 1. Get credentials from header
 			String header = request.getHeader("Authorization");
+			
+			if(header == null) throw new AuthenticationCredentialsNotFoundException("No credentials found in context");
 			
 			String[] tokens = extractAndDecodeHeader(header, request);
 			

@@ -1,5 +1,7 @@
 package com.delgadotrueba.api.config;
 
+import static java.util.Collections.singletonList;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Predicate;
@@ -14,12 +17,18 @@ import com.google.common.base.Predicate;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.BasicAuth;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.spring.web.plugins.DocumentationPluginsManager;
+import springfox.documentation.spring.web.scanners.ApiDescriptionReader;
+import springfox.documentation.spring.web.scanners.ApiListingScanner;
+import springfox.documentation.spring.web.scanners.ApiModelReader;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import static java.util.Collections.*;
 
 @Configuration
 @EnableSwagger2
@@ -57,8 +66,7 @@ public class SwaggerConfig {
     private BasicAuth basicAuth() {
         return new BasicAuth("Basic");
     }
-    
-     
+         
     private SecurityContext securityContext() {
         return SecurityContext.builder()
             .securityReferences(this.defaultAuth())
@@ -67,25 +75,32 @@ public class SwaggerConfig {
             .build();
      }
      
-     private List<SecurityReference> defaultAuth() {
-        
-    	AuthorizationScope authorizationScope
-            = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        
-        return singletonList(
-            new SecurityReference("Basic", authorizationScopes)
-        ); 
-     }
+	private List<SecurityReference> defaultAuth() {
+	    
+		AuthorizationScope authorizationScope
+		        = new AuthorizationScope("global", "accessEverything");
+		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+		authorizationScopes[0] = authorizationScope;
+		
+		return singletonList(
+		    new SecurityReference("Basic", authorizationScopes)
+		    ); 
+	 }
      
-     private Predicate<org.springframework.http.HttpMethod> methodSelector() {     
-         return new Predicate<org.springframework.http.HttpMethod>() {
+	private Predicate<org.springframework.http.HttpMethod> methodSelector() {     
+	    return new Predicate<org.springframework.http.HttpMethod>() {
 	 		@Override
 	 		public boolean apply(org.springframework.http.HttpMethod input) {
 	 			return input.matches("POST") || input.matches("PUT")  || input.matches("DELETE");
 	 		}
-         };
-     }
+	    };
+	}
    
+	/*PRUEBA*/
+    @Primary
+    @Bean
+    public ApiListingScanner addExtraOperations(ApiDescriptionReader apiDescriptionReader, ApiModelReader apiModelReader, DocumentationPluginsManager pluginsManager)
+    {
+        return new FormLoginOperations(apiDescriptionReader, apiModelReader, pluginsManager);
+    }
 }
