@@ -35,6 +35,7 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
             BadRequestException.class,
+            org.springframework.web.bind.MethodArgumentNotValidException.class,
             org.springframework.dao.DuplicateKeyException.class,
             org.springframework.web.HttpRequestMethodNotSupportedException.class,
             org.springframework.web.bind.MethodArgumentNotValidException.class,

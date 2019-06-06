@@ -41,11 +41,7 @@ public class EmployeeResource {
 	public EmployeeDTO getEmployee(@PathVariable int employeeId) {
 		
 		EmployeeDTO theEmployee = employeeService.findById(employeeId);
-		
-		if (theEmployee == null) {
-			throw new RuntimeException("Employee id not found - " + employeeId);
-		}
-		
+			
 		return theEmployee;
 	}
 	
@@ -77,19 +73,10 @@ public class EmployeeResource {
 	// add mapping for DELETE /employees/{employeeId} - delete employee
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{employeeId}")
-	public String deleteEmployee(@PathVariable int employeeId) {
-		
-		EmployeeDTO tempEmployee = employeeService.findById(employeeId);
-		
-		// throw exception if null
-		
-		if (tempEmployee == null) {
-			throw new RuntimeException("Employee id not found - " + employeeId);
-		}
+	public void deleteEmployee(@PathVariable int employeeId) {
 		
 		employeeService.deleteById(employeeId);
 		
-		return "Deleted employee id - " + employeeId;
 	}
 	
 }

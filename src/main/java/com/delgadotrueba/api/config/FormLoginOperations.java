@@ -101,22 +101,29 @@ public class FormLoginOperations extends ApiListingScanner
      * @return Set of response messages that overide the default/global response messages
      */
     private Set<ResponseMessage> responseMessages() { 
-      HashSet<ResponseMessage> responses = new HashSet<ResponseMessage>();
-      
-      ResponseMessage response200 = new ResponseMessageBuilder()
-		      .code(200)
-		      .message("OK")
-		      .responseModel(null)
-		      .build();
-      
-      ResponseMessage response401 = new ResponseMessageBuilder()
-    	      .code(401)
-    	      .message("No credentials found in header or invalid user/password")
-    	      .responseModel(null)
-    	      .build();
-      
-      responses.add(response200);
-      responses.add(response401);
+    	 HashSet<ResponseMessage> responses = new HashSet<ResponseMessage>();
+         
+         ResponseMessage response200 = new ResponseMessageBuilder()
+   		      .code(200)
+   		      .message("OK")
+   		      .responseModel(null)
+   		      .build();
+         
+         ResponseMessage response400 = new ResponseMessageBuilder()
+   		      .code(400)
+   		      .message("The header Authoritation is not found or does not have a valid format")
+   		      .responseModel(null)
+   		      .build();
+         
+         ResponseMessage response401 = new ResponseMessageBuilder()
+       	      .code(401)
+       	      .message("Wrong user/password")
+       	      .responseModel(null)
+       	      .build();
+         
+         responses.add(response200);
+         responses.add(response400);
+         responses.add(response401);
 
       return responses;
     }

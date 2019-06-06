@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.delgadotrueba.api.dao.EmployeeRepository;
 import com.delgadotrueba.api.dtos.EmployeeDTO;
+import com.delgadotrueba.api.exceptions.ConflictException;
 import com.delgadotrueba.api.orm.Employee;
 
 @Service
@@ -39,13 +40,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 		
 		EmployeeDTO theEmployee = null;
 		
-		if (result.isPresent()) {
-			theEmployee = new EmployeeDTO(result.get());
-		}
-		else {
-			// we didn't find the employee
-			throw new RuntimeException("Did not find employee id - " + theId);
-		}
+		if (!result.isPresent()) throw new ConflictException("Did not find employee id - " + theId);
+			
+		theEmployee = new EmployeeDTO(result.get());
 		
 		return theEmployee;
 	}
@@ -80,6 +77,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 	
 	@Override
 	public void deleteById(int theId) {
+		
+		Optional<Employee> tempEmployee = employeeRepository.findById(theId);
+				
+		if (!tempEmployee.isPresent()) 
+			throw new ConflictException("Did not find employee id - " + theId);
+		
 		employeeRepository.deleteById(theId);
+		
 	}
 }

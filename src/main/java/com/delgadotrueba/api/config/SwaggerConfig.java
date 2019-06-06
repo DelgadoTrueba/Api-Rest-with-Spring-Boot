@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Predicate;
 
+import io.swagger.models.HttpMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -49,7 +50,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() { 
     	 	
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_2) 		
         		.select()                                  
         		.apis(RequestHandlerSelectors.basePackage("com.delgadotrueba.api"))              
         		.paths(PathSelectors.any())                          
@@ -57,7 +58,7 @@ public class SwaggerConfig {
         		.apiInfo(this.apiInfo())
         	    .produces(DEFAULT_PRODUCES_AND_CONSUMES)
         	    .consumes(DEFAULT_PRODUCES_AND_CONSUMES)
-        	    .useDefaultResponseMessages(false)
+        	    .useDefaultResponseMessages(true)
         	    .securitySchemes( this.schemeList() )
         	    .securityContexts( this.securityContextList() );
     }
