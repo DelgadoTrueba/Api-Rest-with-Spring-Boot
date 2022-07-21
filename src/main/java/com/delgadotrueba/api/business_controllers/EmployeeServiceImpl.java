@@ -53,7 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 		Employee theEmployee = new Employee(
 											theEmployeeDTO.getFirstName(),
 											theEmployeeDTO.getLastName(),
-											theEmployeeDTO.getEmail()
+											theEmployeeDTO.getEmail(),
+											theEmployeeDTO.getImage()
 											);
 		
 		employeeRepository.save(theEmployee);
@@ -69,6 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		theEmployee.setFirstName(theEmployeeDTO.getFirstName());
 		theEmployee.setLastName(theEmployeeDTO.getLastName());
 		theEmployee.setEmail(theEmployeeDTO.getEmail());
+		theEmployee.setImage(theEmployeeDTO.getImage());
 		
 		this.employeeRepository.save(theEmployee);
 		

@@ -28,6 +28,9 @@ public class Employee {
 	
 	@Column(name="email")
 	private String email;
+
+	@Column(name="image")
+	private String image;
 	
 		
 	// define constructors
@@ -36,10 +39,11 @@ public class Employee {
 		
 	}
 
-	public Employee(String firstName, String lastName, String email) {
+	public Employee(String firstName, String lastName, String email, String: image) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.image = image;
 	}
 
 	// define getter/setter
@@ -74,6 +78,14 @@ public class Employee {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	// define tostring
