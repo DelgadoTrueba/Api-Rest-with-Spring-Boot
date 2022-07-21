@@ -39,7 +39,7 @@ public class Employee {
 		
 	}
 
-	public Employee(String firstName, String lastName, String email, String: image) {
+	public Employee(String firstName, String lastName, String email, String image) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
