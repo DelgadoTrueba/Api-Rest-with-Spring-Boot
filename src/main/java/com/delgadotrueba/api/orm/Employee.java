@@ -29,6 +29,7 @@ public class Employee {
 	@Column(name="email")
 	private String email;
 
+	@Lob
 	@Column(name="image")
 	private String image;
 	
