@@ -24,7 +24,7 @@ class EmployeeRepositoryIT {
 	
     @BeforeEach
     void seedDb() {
-        this.employee1 = new Employee("David Manuel", "Delgado Conchiña", "dc@gmail.com");
+        this.employee1 = new Employee("David Manuel", "Delgado Conchiña", "dc@gmail.com", "AA");
         this.employeeRepository.save(this.employee1);
     }
 
