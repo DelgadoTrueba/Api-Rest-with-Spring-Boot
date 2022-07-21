@@ -33,7 +33,7 @@ public class EmployeeDTO {
 		this.firstName = employee.getFirstName();
 		this.lastName = employee.getLastName();
 		this.email = employee.getEmail();
-		this.image = employee.getImage()
+		this.image = employee.getImage();
 	}
 	
 	public int getId() {
